@@ -15,8 +15,8 @@
   A.hex = (key) => (TT.COLORS[key] || TT.COLORS.chalk).hex;
 
   /* ---------- Icons (drawn in a 100-unit box around 0,0) ---------- */
-  function icon(name, cx, cy, size, g) {
-    const ink = A.ink(g), acc = A.acc(g), k = size / 100;
+  function icon(name, cx, cy, size, g, pal) {
+    const ink = pal ? pal.ink : A.ink(g), acc = pal ? pal.acc : A.acc(g), k = size / 100;
     let d = "";
     switch (name) {
       case "dog":
@@ -58,19 +58,26 @@
              <path d="M-21 6 L21 6 L18 36 L-18 36 Z" fill="${acc}"/>
              <path d="M-10 -22 q-6 -8 0 -16 q6 -8 0 -16 M10 -22 q-6 -8 0 -16 q6 -8 0 -16" stroke="${ink}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
         break;
+      case "diya":
+        d = `<path d="M-40 6 Q0 44 40 6 Z" fill="${ink}"/>
+             <path d="M-40 6 L40 6" stroke="${acc}" stroke-width="5" stroke-linecap="round"/>
+             <path d="M0 -44 C14 -26 12 -8 0 -2 C-12 -8 -14 -26 0 -44 Z" fill="${acc}"/>
+             <path d="M0 -30 C6 -20 5 -12 0 -8 C-5 -12 -6 -20 0 -30 Z" fill="${g}"/>`;
+        break;
     }
     return `<g transform="translate(${cx} ${cy}) scale(${k})">${d}</g>`;
   }
   A.icon = icon;
 
   /* ---------- Print block (icon + stacked words) ---------- */
-  function printBlock(spec, cx, top, w, g, name) {
+  const printLines = (spec, name) => spec.lines.map((l) => l.replace("{NAME}", (name || "BRUNO").toUpperCase()));
+  function printBlock(spec, cx, top, w, g, name, pal) {
     if (!spec) return "";
-    const ink = A.ink(g), acc = A.acc(g);
-    if (spec.big) return icon(spec.icon, cx, top + w * 0.46, w * 0.92, g);
-    const lines = spec.lines.map((l) => l.replace("{NAME}", (name || "BRUNO").toUpperCase()));
+    const ink = pal ? pal.ink : A.ink(g), acc = pal ? pal.acc : A.acc(g);
+    if (spec.big) return icon(spec.icon, cx, top + w * 0.46, w * 0.92, g, pal);
+    const lines = printLines(spec, name);
     const iconSize = lines.length ? w * 0.36 : w * 0.7;
-    let out = icon(spec.icon, cx, top + iconSize / 2, iconSize, g);
+    let out = icon(spec.icon, cx, top + iconSize / 2, iconSize, g, pal);
     const longest = Math.max(...lines.map((l) => l.length), 1);
     const fs = Math.min(w * 0.23, w / (longest * 0.6));
     let y = top + iconSize + fs * 0.95;
@@ -146,7 +153,7 @@
       s += `<clipPath id="${id}"><path d="M50,100 L250,100 L160,256 Q150,272 140,256 Z"/></clipPath><g clip-path="url(#${id})">`;
       for (let r = 0; r < 6; r++) for (let c = 0; c < 7; c++) {
         const x = 40 + c * 36 + (r % 2 ? 18 : 0), y = 118 + r * 30;
-        s += icon(p.pattern === "chai" ? "chai" : "paw", x, y, 20, g);
+        s += icon(p.pattern || "paw", x, y, 20, g);
       }
       s += `</g>`;
     }
@@ -202,4 +209,36 @@
   };
 
   A.face = (kind, hex) => wrap(icon(kind, 50, 54, 78, hex), "0 0 100 100");
+
+  /* ---------- Production exports (used by tools/build-production.js) ----------
+     Print artwork on a transparent ground. Knockouts (eyes, snout, whiskers) are cut
+     out with a mask, so each file contains only the two ink colours. */
+  A.INKS = { light: { ink: "#1C2150", acc: "#E4541A" }, dark: { ink: "#FFF6EA", acc: "#FFB38F" } };
+  const KO = "#00FF00";
+  const knockout = (inner, pal, box) => {
+    const id = "ko" + ++uid;
+    const mask = inner.split(pal.ink).join("#FFFFFF").split(pal.acc).join("#FFFFFF").split(KO).join("#000000");
+    return `<mask id="${id}" maskUnits="userSpaceOnUse" x="${box[0]}" y="${box[1]}" width="${box[2]}" height="${box[3]}"><rect x="${box[0]}" y="${box[1]}" width="${box[2]}" height="${box[3]}" fill="#000"/>${mask}</mask><g mask="url(#${id})">${inner.split(KO).join("none")}</g>`;
+  };
+  A.printArt = (printKey, side, tone, name) => {
+    const spec = TT.PRINTS[printKey] && TT.PRINTS[printKey][side];
+    if (!spec) return "";
+    const pal = A.INKS[tone], w = 100;
+    let h = w * 0.96;
+    if (!spec.big) {
+      const lines = printLines(spec, name || "NAME");
+      const iconSize = lines.length ? w * 0.36 : w * 0.7;
+      const fs = Math.min(w * 0.23, w / (Math.max(...lines.map((l) => l.length), 1) * 0.6));
+      h = iconSize + (lines.length ? fs * 0.95 + (lines.length - 1) * fs * 0.98 + fs * 0.28 : 0);
+    }
+    const box = [-14, -4, w + 28, +(h + 8).toFixed(1)];
+    const inner = printBlock(spec, 50, 0, w, KO, name || "NAME", pal);
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${box.join(" ")}">${knockout(inner, pal, box)}</svg>`;
+  };
+  /* Seamless repeat tile for the all-over bandana prints */
+  A.patternTile = (pattern, tone) => {
+    const pal = A.INKS[tone], box = [0, 0, 72, 60];
+    const inner = [[18, 15], [54, 15], [0, 45], [36, 45], [72, 45]].map(([x, y]) => icon(pattern, x, y, 20, KO, pal)).join("");
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 60">${knockout(inner, pal, box)}</svg>`;
+  };
 })();

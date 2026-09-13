@@ -5,12 +5,10 @@
 
   /* ================= Product ================= */
   const picks = {}, views = {};
-  const fabric = (p) => p.cat === "hoodie"
-    ? (p.kind === "pet" ? "320 GSM brushed fleece (80% cotton, 20% polyester), leash slit at the back" : "320–380 GSM loopback fleece, ribbed cuffs and hem")
-    : p.cat === "bandana" ? "100% cotton poplin, double-layered and reversible, slip-over collar sleeve"
-    : p.kind === "human" ? (p.id === "human-dog-parent" ? "220 GSM heavyweight combed cotton, drop-shoulder oversized fit" : "180 GSM combed cotton, bio-washed, regular fit")
-    : p.kind === "pet" ? "160 GSM cotton with 5% spandex for stretch, rib collar, wide leg openings"
-    : "Human tee: 180 GSM combed cotton. Pet tee: 160 GSM cotton with 5% spandex, rib collar";
+  const fabric = (p) => p.fab.map((f, i) => {
+    const F = TT.FABRICS[f], who = p.fab.length > 1 ? (i ? "Their piece: " : "Your piece: ") : "";
+    return `<li>${who}${F.name} (${F.comp}) · ${F.finish.toLowerCase()} · ${F.fit.toLowerCase()}</li>`;
+  }).join("");
 
   V.product = (r) => {
     const p = TT.byId(r.arg);
@@ -34,7 +32,7 @@
         <div class="pdp-info">
           <div><span class="card-for">${TT.forLabel(p)}${p.badge ? " · " + p.badge : ""}</span>
             <h1 style="margin:8px 0 10px">${esc(p.name)}</h1>
-            <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">${TT.stars(p)}<span class="muted" style="font-size:13px">${p.reviews.toLocaleString("en-IN")} verified reviews</span></div></div>
+            <div class="mono muted" style="font-size:12.5px">Style ${p.sku} · ${TT.fabShort(p)}</div></div>
           <div class="pdp-price">${TT.priceHtml(p)}<div class="tax">Inclusive of all taxes · or 3 interest-free UPI payments of ${fmt(Math.ceil(p.price / 3))}</div></div>
           ${p.kind === "twin" ? `<div class="twin-note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="12" r="5"/><circle cx="17" cy="13" r="3.5"/></svg>This set is 1 tee for you + 1 tee for your pet. Pick both sizes.</div>` : ""}
           <div style="display:flex;flex-direction:column;gap:18px" data-picker>${TT.pickerHtml(p, st, { guide: true })}</div>
@@ -50,7 +48,7 @@
           <div class="perks"><div><b>Free shipping</b>on orders over ${fmt(TT.BRAND.freeShip)}</div><div><b>15-day exchange</b>free size swaps, pickup included</div><div><b>Cash on delivery</b>plus UPI, cards &amp; netbanking</div></div>
           <div class="acc">
             <details open><summary>About this ${p.cat === "bandana" ? "bandana" : p.kind === "twin" ? "set" : p.cat}</summary><div class="acc-body"><p>${esc(p.desc)}</p></div></details>
-            <details><summary>Fabric &amp; fit</summary><div class="acc-body"><ul><li>${fabric(p)}</li><li>Water-based, AZO-free inks — OEKO-TEX certified</li><li>Knitted, cut and printed in Tiruppur, Tamil Nadu</li>${p.kind !== "human" && p.cat !== "bandana" ? "<li>Pet tees: measure chest just behind the front legs; if between sizes, size up</li>" : ""}</ul></div></details>
+            <details><summary>Fabric &amp; fit</summary><div class="acc-body"><ul>${fabric(p)}<li>Water-based, AZO-free inks</li><li>Made in India</li><li>Style code ${p.sku}</li>${p.kind !== "human" && p.cat !== "bandana" ? "<li>Pet tees: measure chest just behind the front legs; if between sizes, size up</li>" : ""}</ul></div></details>
             <details><summary>Wash care</summary><div class="acc-body"><ul><li>Turn inside out, cold machine wash with similar colours</li><li>Line dry in shade; skip the tumble dryer</li><li>Iron inside out, never on the print</li></ul></div></details>
             <details><summary>Shipping &amp; exchange</summary><div class="acc-body"><p>Metro cities in 2–4 days, rest of India in 4–7 days${p.custom ? "; personalised items take 3–4 extra working days to print" : ""}. Free size exchange within 15 days on unwashed items with tags.${p.custom ? " Personalised items can be exchanged for size but not returned." : ""}</p></div></details>
           </div>

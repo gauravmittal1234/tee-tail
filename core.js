@@ -22,7 +22,6 @@
   TT.esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   TT.fmt = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
   TT.off = (p) => Math.round((1 - p.price / p.mrp) * 100);
-  TT.stars = (p) => `<span class="rating"><span class="star">★</span>${p.rating.toFixed(1)} <span class="count">(${p.reviews.toLocaleString("en-IN")})</span></span>`;
   TT.priceHtml = (p) => `<div class="price"><b>${TT.fmt(p.price)}</b><s>${TT.fmt(p.mrp)}</s><span class="off">${TT.off(p)}% off</span></div>`;
   TT.tile = (p) => "var(--t" + ((TT.PRODUCTS.indexOf(p) % 6) + 1) + ")";
   TT.forLabel = (p) => {
@@ -102,7 +101,7 @@
   /* ---------- Product card ---------- */
   TT.card = (p) => {
     const w = S.wish.includes(p.id);
-    const badgeCls = p.badge === "Bestseller" ? "hot" : p.isNew ? "new" : "";
+    const badgeCls = p.badge === "Signature" || p.edit ? "hot" : p.isNew ? "new" : "";
     return `<article class="card">
       <a class="card-media" href="#/product/${p.id}" style="background:${TT.tile(p)}" aria-label="${TT.esc(p.name)}">
         ${TT.ART.product(p)}
@@ -114,7 +113,7 @@
       <div class="card-body">
         <span class="card-for">${TT.forLabel(p)}</span>
         <a class="card-title" href="#/product/${p.id}">${TT.esc(p.name)}</a>
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">${TT.stars(p)}<span class="card-swatches">${p.colors.map((c) => `<i style="background:${TT.COLORS[c].hex}" title="${TT.COLORS[c].name}"></i>`).join("")}</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="card-fab">${TT.fabShort(p)}</span><span class="card-swatches">${p.colors.map((c) => `<i style="background:${TT.COLORS[c].hex}" title="${TT.COLORS[c].name}"></i>`).join("")}</span></div>
         ${TT.priceHtml(p)}
         <div class="card-foot"><button class="btn sm block" data-act="quick" data-id="${p.id}">Add to bag</button></div>
       </div>
@@ -271,7 +270,7 @@
     // nav highlight
     const p = r.params, key = r.path === "size-guide" ? "size" : r.path !== "shop" ? "" :
       p.get("kind") === "twin" ? "twin" : p.get("species") === "dog" ? "dog" : p.get("species") === "cat" ? "cat" : p.get("kind") === "human" ? "human" :
-      p.get("cat") === "hoodie" ? "hoodie" : p.get("cat") === "bandana" ? "bandana" : p.get("custom") ? "custom" : p.get("sort") === "discount" ? "offers" : "";
+      p.get("cat") === "hoodie" ? "hoodie" : p.get("cat") === "bandana" ? "bandana" : p.get("custom") ? "custom" : p.get("edit") ? "edit" : p.get("sort") === "discount" ? "offers" : "";
     $$("#nav a").forEach((a) => a.classList.toggle("on", a.dataset.nav === key));
     document.title = (out && out.title ? out.title + " · " : "") + "Tee & Tail";
   };

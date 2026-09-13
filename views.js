@@ -132,9 +132,9 @@
       <div>
         <span class="eyebrow">New · The Twinning Edit 2026</span>
         <h1 id="heroTitle">Same tee.<br>Two sizes.<br><em>One very good boy.</em></h1>
-        <p class="hero-lede">Matching tees and hoodies for you and your dog or cat — cut for four legs, sized by chest in centimetres, printed with pet-safe inks in Tiruppur.</p>
+        <p class="hero-lede">Matching tees and hoodies for you and your dog or cat — cut for four legs, sized by chest in centimetres, printed with water-based inks in India.</p>
         <div class="hero-ctas"><a class="btn" href="#/shop?kind=twin">Shop twinning sets</a><a class="btn ghost" href="#/size-guide">Find my pet's size</a></div>
-        <div class="hero-stats"><div><b>48,000+</b>matched pairs shipped</div><div><b>4.8 ★</b>from 9,600 reviews</div><div><b>15 days</b>free size exchange</div></div>
+        <div class="hero-stats"><div><b>${TT.PRODUCTS.filter((p) => p.kind === "twin").length} twinning sets</b>for dogs &amp; cats</div><div><b>${TT.PRODUCTS.length} styles</b>in ${Object.keys(TT.COLORS).length} colours</div><div><b>15 days</b>free size exchange</div></div>
       </div>
       <div class="twin-stage">
         <div class="twin-art"><div class="human" data-h>${ART.human(ART.hex(heroColor), "goodboy")}</div><div class="pet" data-p>${ART.pet(ART.hex(heroColor), "goodboy")}</div>
@@ -149,7 +149,7 @@
     </section>
 
     <section class="section" aria-labelledby="bestTitle">
-      <div class="sec-head"><div><h2 id="bestTitle">Bestsellers</h2><p>Who are you shopping for today?</p></div>
+      <div class="sec-head"><div><h2 id="bestTitle">Signature styles</h2><p>Who are you shopping for today?</p></div>
         <div class="tabs" role="tablist">${Object.entries(tabDefs).map(([k, [n]]) => `<button class="chip ${k === homeTab ? "on" : ""}" role="tab" aria-selected="${k === homeTab}" data-tab="${k}">${n}</button>`).join("")}</div></div>
       <div class="rail" data-rail>${railFor(homeTab)}</div>
     </section>
@@ -169,7 +169,7 @@
         <a class="btn" href="#/product/pet-name-tee">Personalise a tee</a>
         <div class="promo-art" data-promo-art>${ART.pet("#F4A340", "custom", { name: promoName })}</div></div>
       <div class="promo" style="background:var(--t2)"><span class="eyebrow">Adopt, don't shop</span><h3>Indie &amp; proud.</h3>
-        <p>₹50 from every Indie tee funds street-dog feeding drives with our rescue partners.</p>
+        <p>For the desi dogs with the best ears in the building — and the humans who adopted them.</p>
         <a class="btn navy" href="#/product/dog-indie">Shop the Indie tee</a>
         <div class="promo-art">${ART.pet("#F4A340", "indie")}</div></div>
     </div></section>
@@ -180,16 +180,15 @@
     </section>
 
     <section class="section" aria-labelledby="revTitle">
-      <div class="sec-head"><div><h2 id="revTitle">Pet parents, in their own words</h2><p>Real sizes, real breeds, very real zoomies.</p></div></div>
-      <div class="reviews">${TT.REVIEWS.map((r) => `<figure class="review" style="margin:0"><span class="rating"><span class="star">★★★★★</span></span><q>${esc(r.text)}</q><span class="wore">${esc(r.wore)}</span>
-        <figcaption class="review-who"><span class="avatar" style="background:var(--${r.tile})">${ART.face(r.pet, "#FFF6EA")}</span><span><b>${esc(r.who)}</b><span>${esc(r.where)}</span></span></figcaption></figure>`).join("")}</div>
+      <div class="sec-head"><div><h2 id="revTitle">Measure your pet in two minutes</h2><p>All you need is a soft tape — and a treat for good behaviour.</p></div><a class="link" href="#/size-guide">Full size guide →</a></div>
+      <div class="reviews">${TT.MEASURE.map(([t, d], i) => `<div class="review"><span class="step-n">${i + 1}</span><b class="step-t">${t}</b><p class="muted">${esc(d)}</p></div>`).join("")}</div>
     </section>
 
     <section class="section"><div class="usps">
       ${[["M4 7h16M4 12h16M4 17h10", "180 GSM combed cotton", "Bio-washed, pre-shrunk, soft from the first wear."],
-         ["M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z", "Pet-safe inks", "Water-based, AZO-free, OEKO-TEX certified."],
+         ["M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z", "Water-based inks", "AZO-free and soft to touch — no heavy plastic prints."],
          ["M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4", "Free size exchange", "Swap sizes within 15 days, pickup included."],
-         ["M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21zM12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z", "Knitted in Tiruppur", "Made in India's knitwear capital, fairly."]]
+         ["M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21zM12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z", "Made in India", "Designed, knitted and printed in India."]]
         .map(([d, b, s]) => `<div class="usp"><span class="usp-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg></span><span><b>${b}</b><span>${s}</span></span></div>`).join("")}
     </div></section>
 
@@ -226,7 +225,7 @@
 
   /* ================= Shop ================= */
   const list = (params, k) => (params.get(k) || "").split(",").filter(Boolean);
-  const SORTS = [["popular", "Most popular"], ["new", "Newest first"], ["price-asc", "Price: low to high"], ["price-desc", "Price: high to low"], ["discount", "Biggest discount"], ["rating", "Top rated"]];
+  const SORTS = [["popular", "Most popular"], ["new", "Newest first"], ["price-asc", "Price: low to high"], ["price-desc", "Price: high to low"], ["discount", "Biggest discount"]];
   const LABELS = { kind: { twin: "Twinning sets", pet: "For pets", human: "For pawrents" }, species: { dog: "Dogs", cat: "Cats" }, cat: { tee: "Tees", hoodie: "Hoodies", bandana: "Bandanas" } };
 
   function sizesOf(p) { return new Set(TT.sizeRows(p).concat(p.species[1] ? TT.sizeRows(p, p.species[1]) : []).flatMap((r) => r.list.map((x) => x.s))); }
@@ -242,6 +241,7 @@
     f("size", (p, v) => { const s = sizesOf(p); return v.some((x) => s.has(x)); });
     f("print", (p, v) => v.includes(p.print));
     if (params.get("custom")) r = r.filter((p) => p.custom);
+    if (params.get("edit")) r = r.filter((p) => p.edit === params.get("edit"));
     const max = +params.get("max");
     if (max) r = r.filter((p) => p.price <= max);
     return r;
@@ -249,11 +249,11 @@
 
   function sortProducts(r, sort) {
     const by = {
-      popular: (a, b) => (a.best || 99) - (b.best || 99) || b.reviews - a.reviews,
+      popular: (a, b) => (a.best || 99) - (b.best || 99) || (b.isNew || 0) - (a.isNew || 0),
       new: (a, b) => (b.isNew || 0) - (a.isNew || 0) || (a.best || 99) - (b.best || 99),
       "price-asc": (a, b) => a.price - b.price, "price-desc": (a, b) => b.price - a.price,
-      discount: (a, b) => TT.off(b) - TT.off(a), rating: (a, b) => b.rating - a.rating || b.reviews - a.reviews
-    }[sort] || ((a, b) => (a.best || 99) - (b.best || 99) || b.reviews - a.reviews);
+      discount: (a, b) => TT.off(b) - TT.off(a)
+    }[sort] || ((a, b) => (a.best || 99) - (b.best || 99) || (b.isNew || 0) - (a.isNew || 0));
     return r.sort(by);
   }
 
@@ -261,6 +261,7 @@
     if (params.get("q")) return `Results for “${esc(params.get("q"))}”`;
     const kind = list(params, "kind"), sp = list(params, "species"), cat = list(params, "cat");
     if (params.get("custom")) return "Personalised tees";
+    if (params.get("edit")) return TT.EDITS[params.get("edit")] || "Collection";
     if (params.get("print") === "indie") return "Adopt, don't shop";
     if (kind.length === 1 && kind[0] === "twin") return "Twinning sets";
     if (kind.length === 1 && kind[0] === "human") return "Tees for pawrents";
@@ -281,6 +282,7 @@
     list(params, "color").forEach((v) => active.push(["color", v, TT.COLORS[v] ? TT.COLORS[v].name : v]));
     list(params, "size").forEach((v) => active.push(["size", v, "Size " + v]));
     if (params.get("custom")) active.push(["custom", "1", "Personalised"]);
+    if (params.get("edit")) active.push(["edit", "", TT.EDITS[params.get("edit")] || params.get("edit")]);
     if (params.get("max")) active.push(["max", "", "Under " + fmt(max)]);
     if (params.get("q")) active.push(["q", "", "“" + params.get("q") + "”"]);
 
