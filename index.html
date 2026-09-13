@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tee & Tail</title>
+<meta name="description" content="Matching tees for pet parents and their dogs and cats.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐾%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="announce">
+  <div class="wrap">
+    <div class="announce-links">
+      <a href="#/shop?kind=twin">Twinning Sets</a>
+      <a href="#/orders">Track Order</a>
+      <a href="#/size-guide">Size Guide</a>
+    </div>
+    <div class="announce-ticker" id="ticker">Free shipping over ₹999 · Free size exchange within 15 days · Use <b>TWINNING15</b> for 15% off sets</div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="head-row">
+      <a class="logo" href="#/" aria-label="Tee & Tail home">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="30" height="30"><path d="M13 9c2 2.6 12 2.6 14 0l7 3.4 3 7.2-4.6 2.3-2-2.2V33H9.6V19.7l-2 2.2L3 19.6l3-7.2z" fill="#fff"/><g fill="#FF6A2A"><ellipse cx="20" cy="24.4" rx="3.3" ry="2.7"/><circle cx="16.1" cy="20" r="1.3"/><circle cx="18.6" cy="18.4" r="1.3"/><circle cx="21.4" cy="18.4" r="1.3"/><circle cx="23.9" cy="20" r="1.3"/></g></svg>
+        </span>
+        <span><span class="logo-word">tee<i>&amp;</i>tail</span><span class="logo-sub">Twinning for pet parents</span></span>
+      </a>
+      <div class="search" role="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="searchInput" type="search" placeholder="Search “twinning set”, “Indie”, “cat tee”…" autocomplete="off" aria-label="Search products">
+        <div class="search-pop" id="searchPop" hidden></div>
+      </div>
+      <div class="head-actions">
+        <button class="icon-btn theme-toggle" id="themeBtn" aria-label="Switch colour theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+          <span class="lbl">Theme</span>
+        </button>
+        <a class="icon-btn" href="#/orders" aria-label="Your orders">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="m3 7.5 9 4.5 9-4.5M12 12v9"/></svg>
+          <span class="lbl">Orders</span>
+        </a>
+        <a class="icon-btn" href="#/wishlist" aria-label="Wishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"/></svg>
+          <span class="lbl">Wishlist</span>
+          <span class="badge-dot" id="wishCount" hidden>0</span>
+        </a>
+        <button class="icon-btn" id="cartBtn" aria-label="Open bag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+          <span class="lbl">Bag</span>
+          <span class="badge-dot" id="cartCount" hidden>0</span>
+        </button>
+      </div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Shop categories">
+      <a href="#/shop?kind=twin" data-nav="twin">Twinning Sets<span class="tag">HOT</span></a>
+      <a href="#/shop?kind=pet&amp;species=dog" data-nav="dog">Dogs</a>
+      <a href="#/shop?kind=pet&amp;species=cat" data-nav="cat">Cats</a>
+      <a href="#/shop?kind=human" data-nav="human">Pawrents</a>
+      <a href="#/shop?cat=hoodie" data-nav="hoodie">Winter Hoodies</a>
+      <a href="#/shop?cat=bandana" data-nav="bandana">Bandanas</a>
+      <a href="#/shop?custom=1" data-nav="custom">Personalise</a>
+      <a href="#/size-guide" data-nav="size">Size Guide</a>
+      <a href="#/shop?sort=discount" data-nav="offers">Offer Zone<span class="tag">UPTO 26%</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="app" tabindex="-1"></main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="logo-word">tee<i>&amp;</i>tail</span>
+        <p style="margin-top:12px;max-width:36ch">Matching tees for pet parents and the dogs and cats who run their lives. Knitted and printed in Tiruppur, India.</p>
+        <form class="news" id="newsForm" novalidate>
+          <input type="email" id="newsEmail" placeholder="Your email for new drops" aria-label="Email address">
+          <button class="btn sm" type="submit">Subscribe</button>
+        </form>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#/shop?kind=twin">Twinning Sets</a></li>
+          <li><a href="#/shop?kind=pet&amp;species=dog">Dog Tees</a></li>
+          <li><a href="#/shop?kind=pet&amp;species=cat">Cat Tees</a></li>
+          <li><a href="#/shop?kind=human">Pawrent Tees</a></li>
+          <li><a href="#/shop?custom=1">Personalised</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul>
+          <li><a href="#/size-guide">Size Guide</a></li>
+          <li><a href="#/orders">Track Order</a></li>
+          <li><a href="#/faq">Shipping &amp; Exchanges</a></li>
+          <li><a href="#/faq">FAQs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Say hello</h4>
+        <ul>
+          <li>hello@teeandtail.in</li>
+          <li><a href="tel:+918860957330">+91 88609 57330</a></li>
+          <li>Mon–Sat, 10 AM – 7 PM</li>
+          <li><a href="#/shop?print=indie">Adopt, don't shop</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 Tee &amp; Tail. All paws reserved.</span>
+      <div class="pay-row"><span>UPI</span><span>VISA</span><span>MASTERCARD</span><span>RUPAY</span><span>COD</span></div>
+    </div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" aria-label="Your bag" hidden></aside>
+<div class="modal" id="modal" role="dialog" aria-modal="true" hidden></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="data.js" charset="utf-8"></script>
+<script src="art.js" charset="utf-8"></script>
+<script src="core.js" charset="utf-8"></script>
+<script src="views.js" charset="utf-8"></script>
+<script src="pages.js" charset="utf-8"></script>
+</body>
+</html>
