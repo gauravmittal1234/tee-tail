@@ -2,7 +2,7 @@
 
 Matching tees for pet parents and their dogs and cats — a static storefront inspired by HUFT.
 
-**Live site:** https://gauravmittal1234.github.io/tee-tail/
+**Live site:** https://mayalab.app
 
 ## What's inside
 
